@@ -1,0 +1,76 @@
+This series test contains five projects in Jenkins
+    je_dbsim_abortstress
+    je_dbsim_duplicate
+    je_dbsim_dwstress
+    je_dbsim_embedded_abort
+    je_dbsim_recovery
+
+Jenkins Machine: slc04ark
+Emails: adam.qian@oracle.com, mark.hayes@oracle.com, dwayne.chung@oracle.com, dave.rubin@oracle.com, sam.haradhvala@oracle.com, linda.q.lee@oracle.com, tim.blackman@oracle.com, nosql_eng_cn_grp@oracle.com, markos.zaharioudakis@oracle.com, junyi.xie@oracle.com
+
+je_dbsim_abortstress:
+    Test Machine: slc04aro
+    Current Duration: 18hours
+    Issued Time: 00:00 UTC Every Sunday
+    Usage:
+        rm -f /scratch/jenkins/jobs/je_dbsim_abortstress/workspace/*
+        ssh -l tests slc04aro "rm -rf /scratch/tests/je_dbsim_abortstress"
+        ssh -l tests slc04aro "mkdir /scratch/tests/je_dbsim_abortstress"
+        scp /scratch/jenkins/bin/je_dbsim_abortstress.sh tests@slc04aro:/scratch/tests/
+        scp /scratch/jenkins/bin/error_substract_dbsim.sh tests@slc04aro:~/
+        scp /scratch/jenkins/bin/gen_xml.sh tests@slc04aro:~/
+        ssh -l tests slc04aro "bash /scratch/tests/je_dbsim_abortstress.sh -t je_dbsim_abortstress"
+        
+je_dbsim_duplicate:
+    Test Machine: slc04arn
+    Current Duration: 34hours
+    Issued Time: 01:00 UTC Every Wednesday
+    Usage:
+        rm -f /scratch/jenkins/jobs/je_dbsim_duplicate/workspace/*
+        ssh -l tests slc04arn "rm -rf /scratch/tests/je_dbsim_duplicate"
+        ssh -l tests slc04arn "mkdir /scratch/tests/je_dbsim_duplicate"
+        scp /scratch/jenkins/bin/je_dbsim_duplicate.sh tests@slc04arn:/scratch/tests/
+        scp /scratch/jenkins/bin/error_substract_dbsim.sh tests@slc04arn:~/
+        scp /scratch/jenkins/bin/gen_xml.sh tests@slc04arn:~/
+        ssh -l tests slc04arn "bash /scratch/tests/je_dbsim_duplicate.sh -t je_dbsim_duplicate"
+    
+    
+je_dbsim_dwstress:
+    Test Machine: slc04aro
+    Current Duration: 20minutes
+    Issued Time: 02:00 UTC Every Wednesday
+    Usage:
+        rm -f /scratch/jenkins/jobs/je_dbsim_dwstress/workspace/*
+        ssh -l tests slc04aro "rm -rf /scratch/tests/je_dbsim_dwstress"
+        ssh -l tests slc04aro "mkdir /scratch/tests/je_dbsim_dwstress"
+        scp /scratch/jenkins/bin/je_dbsim_dwstress.sh tests@slc04aro:/scratch/tests/
+        scp /scratch/jenkins/bin/error_substract_dbsim.sh tests@slc04aro:~/
+        scp /scratch/jenkins/bin/gen_xml.sh tests@slc04aro:~/
+        ssh -l tests slc04aro "bash /scratch/tests/je_dbsim_dwstress.sh -t je_dbsim_dwstress"    
+    
+    
+je_dbsim_embedded_abort:
+    Test Machine: slc04aro
+    Current Duration: 27minutes
+    Issued Time: 04:00 UTC Every Wednesday
+    Usage:
+        rm -f /scratch/jenkins/jobs/je_dbsim_embedded_abort/workspace/*
+        ssh -l tests slc04aro "rm -rf /scratch/tests/je_dbsim_embedded_abort"
+        ssh -l tests slc04aro "mkdir /scratch/tests/je_dbsim_embedded_abort"
+        scp /scratch/jenkins/bin/je_dbsim_embedded_abort.sh tests@slc04aro:/scratch/tests/
+        scp /scratch/jenkins/bin/error_substract_embed.sh tests@slc04aro:~/error_substract_dbsim.sh
+        scp /scratch/jenkins/bin/gen_xml.sh tests@slc04aro:~/
+        ssh -l tests slc04aro "bash /scratch/tests/je_dbsim_embedded_abort.sh -t je_dbsim_embedded_abort"    
+    
+je_dbsim_recovery:
+    Test Machine: slc04aro
+    Current Duration: 34hours
+    Issued Time: 12:00 UTC Every Friday
+    Usage:
+        rm -f /scratch/jenkins/jobs/je_dbsim_recovery/workspace/*
+        ssh -l tests slc04aro "rm -rf /scratch/tests/je_dbsim_recovery"
+        ssh -l tests slc04aro "mkdir /scratch/tests/je_dbsim_recovery"
+        scp /scratch/jenkins/bin/je_dbsim_recovery.sh tests@slc04aro:/scratch/tests/
+        scp /scratch/jenkins/bin/error_substract_dbsim.sh tests@slc04aro:~/
+        scp /scratch/jenkins/bin/gen_xml.sh tests@slc04aro:~/
+        ssh -l tests slc04aro "bash /scratch/tests/je_dbsim_recovery.sh -t je_dbsim_recovery"   

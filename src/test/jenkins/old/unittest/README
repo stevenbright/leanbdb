@@ -1,0 +1,120 @@
+This series test contains ten projects in Jenkins. Nine projects are OK and one project has a little problem. Its name is set to be standalone test. This needs to be corrected.
+    Tirgered by each new changeset checked in:
+        je_unit_jdk7:slc00brj
+        je_unit_jdk8:slc04arm
+        je_unit_jdk7_branch_5098:slc04ata
+        je_unit_jdk6_branch_5098:slc04atb        
+    
+    Triggered periodly:
+        je_aix_unit_test
+        je_unit_jdk7_iso
+        je_unit_jdk7_je_rep_pre
+        je_unit_jdk7_no_embedded_ln
+        je_unit_jdk8_je_rep_pre
+        je_standalone_secondassociation
+        
+
+Jenkins Machine: slc04ark
+Emails: adam.qian@oracle.com, mark.hayes@oracle.com, dwayne.chung@oracle.com, dave.rubin@oracle.com, sam.haradhvala@oracle.com, linda.q.lee@oracle.com, tim.blackman@oracle.com, nosql_eng_cn_grp@oracle.com, markos.zaharioudakis@oracle.com, junyi.xie@oracle.com
+
+Tirgered by each new changeset checked in:
+    je_unit_jdk7:
+        Test Machine: slc00brj
+        Current Duration: 3hours
+        Issued by new changeset:
+            Repository URL: ssh://adqian@sleepycat-scm.us.oracle.com://a/hgroot/je
+            Branch:         default
+        Usage:
+            mkdir -p /scratch/jenkins/jobs/je_unit_jdk7/workspace/location_of_environment_and_log
+            ssh -l tests slc00brj "rm -rf /scratch/tests/je_unit_jdk7"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc00brj:~/
+            ssh -l tests slc00brj "bash je_unit.sh -t je_unit_jdk7 -j 7 -O '-Dalltests=true' -h /scratch/tests/bin/"
+            
+    je_unit_jdk8:
+        Test Machine: slc04arm
+        Current Duration: 2.5hours
+        Issued by new changeset:
+            Repository URL: ssh://adqian@sleepycat-scm.us.oracle.com://a/hgroot/je
+            Branch:         default
+        Usage:
+            mkdir -p /scratch/jenkins/jobs/je_unit_jdk8/workspace/location_of_environment_and_log
+            ssh -l tests slc04arm "rm -rf /scratch/tests/je_unit_jdk8"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc04arm:~/
+            ssh -l tests slc04arm "bash je_unit.sh -t je_unit_jdk8 -j 8 -O '-Dalltests=true'"   
+            
+    je_unit_jdk7_branch_5098:
+        Test Machine: slc04ata
+        Current Duration: 2hours
+        Issued by new changeset:
+            Repository URL: ssh://adqian@sleepycat-scm.us.oracle.com://a/hgroot/je
+            Branch:         je-5.0.98_branch
+        Usage:
+            ssh -l tests slc04ata "rm -rf /scratch/tests/je_unit_jdk7_branch_5098"
+            scp /scratch/jenkins/bin/je_unit_branch.sh tests@slc04ata:~/
+            ssh -l tests slc04ata "bash je_unit_branch.sh -t je_unit_jdk7_branch_5098 -j 7 -O '-Dalltests=true'"
+            
+    je_unit_jdk6_branch_5098 
+        Test Machine: slc04atb
+        Current Duration: 2hours
+        Issued by new changeset:
+            Repository URL: ssh://adqian@sleepycat-scm.us.oracle.com://a/hgroot/je
+            Branch:         je-5.0.98_branch
+        Usage:
+            ssh -l tests slc04atb "rm -rf /scratch/tests/je_unit_jdk6_branch_5098"
+            scp /scratch/jenkins/bin/je_unit_branch.sh tests@slc04atb:~/
+            ssh -l tests slc04atb "bash je_unit_branch.sh -t je_unit_jdk6_branch_5098 -j 6 -O '-Dalltests=true'"    
+
+
+Triggered periodly:
+    je_aix_unit_test
+        Test Machine: stuzx68
+        Current Duration: 3hours 42minutes
+        Issued Time: 00:00 UTC Every Sunday
+        Usage:
+            mkdir -p /scratch/jenkins/jobs/je_aix_unit_test/workspace/location_of_environment_and_log
+            ssh -l nosql stuzx68 "bash je_aix_unit_test.sh -t je_aix_unit_test"
+            
+    je_unit_jdk7_iso
+        Test Machine: slc04arq
+        Current Duration: 2.5hours
+        Issued Time: 14:00 UTC Every Friday
+        Usage:
+            ssh -l tests slc04arq "rm -rf /scratch/tests/je_unit_jdk7_iso"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc04arq:~/
+            ssh -l tests slc04arq "bash je_unit.sh -t je_unit_jdk7_iso -j 7 -l INFO -O '-Dalltests=true -DisolationLevel=serializable -Dlogging.config.file=logging.properties'"
+            
+    je_unit_jdk7_je_rep_pre
+        Test Machine: slc04arq
+        Current Duration: 5hours
+        Issued Time: 18:00 UTC Every Friday
+        Usage:
+            ssh -l tests slc04arq "rm -rf /scratch/tests/je_unit_jdk7_je_rep_pre"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc04arq:~/
+            ssh -l tests slc04arq "bash je_unit.sh -t je_unit_jdk7_je_rep_pre -j 7 -l INFO -O '-Dalltests=true -Dlogging.config.file=logging.properties -Dreponly=1' -p TRUE"
+            
+    je_unit_jdk7_no_embedded_ln
+        Test Machine: slc04arq
+        Current Duration: 2.5hours
+        Issued Time: 06:00 UTC Every Saturday
+        Usage:
+            ssh -l tests slc04arq "rm -rf /scratch/tests/je_unit_jdk7_no_embedded_ln"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc04arq:~/
+            ssh -l tests slc04arq "bash je_unit.sh -t je_unit_jdk7_no_embedded_ln -j 7 -l INFO -O '-Dalltests=true -Dlogging.config.file=logging.properties' -p TRUE"
+            
+    je_unit_jdk8_je_rep_pre
+        Test Machine: slc04arq
+        Current Duration: 4.5hours
+        Issued Time: 00:00 UTC Every Saturday
+        Usage:
+            ssh -l tests slc04arq "rm -rf /scratch/tests/je_unit_jdk8_je_rep_pre"
+            scp /scratch/jenkins/bin/je_unit.sh tests@slc04arq:~/
+            ssh -l tests slc04arq "bash je_unit.sh -t je_unit_jdk8_je_rep_pre -j 8 -l INFO -O '-Dalltests=true -Dlogging.config.file=logging.properties -Dreponly=1' -p TRUE"
+        
+    je_standalone_secondassociation:
+        Test Machine: slc04arq
+        Current Duration: 1hours
+        Issued Time: 13:00 UTC Every Thursday
+        Usage:
+            ssh -l tests slc04arq "rm -rf /scratch/tests/je_standalone_secondassociation"
+            scp /scratch/jenkins/bin/je_secondassociation.sh tests@slc04arq:~/
+            ssh -l tests slc04arq "bash je_secondassociation.sh -t je_standalone_secondassociation" 

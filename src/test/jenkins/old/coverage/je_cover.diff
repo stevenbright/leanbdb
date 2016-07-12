@@ -1,0 +1,182 @@
+diff -r e9ef8cbf3653 ant/internal.xml
+--- a/ant/internal.xml	Sun Oct 26 17:58:36 2014 -0700
++++ b/ant/internal.xml	Mon Oct 27 18:35:59 2014 -0700
+@@ -67,7 +67,7 @@
+     </target>
+ 
+     <target name="compile-standalone" depends="init-standalone">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <property name="srcdir" value="${standalone.srcdir}"/>
+             <property name="destdir" value="${standalone.destdir}"/>
+             <property name="include" value="**/*.java"/>
+diff -r e9ef8cbf3653 build.xml
+--- a/build.xml	Sun Oct 26 17:58:36 2014 -0700
++++ b/build.xml	Mon Oct 27 18:35:59 2014 -0700
+@@ -61,10 +61,9 @@
+     <property name="j2ee.jarfile" value="${extlibdir}/javaee-api-7.0.jar"/>
+     <property name="jconsole.jarfile" value="${extlibdir}/jconsole.jar"/>
+ 
+-    <property name="clover.tmpdir" value="${builddir}/tmp"/>
+-    <property name="clover.initstring"
+-              location="${clover.tmpdir}/jecoverage.db"/>
+-          <property name="clover.libdir" value="/clover/lib"/>
++    <property name="clover.tmpdir" value="${builddir}/clover_tmp"/>
++    <property name="clover.initstring" location="${clover.tmpdir}/jecoverage.db"/>
++    <property name="clover.libdir" value="/scratch/tests/app/ant/lib"/>
+     <property name="clover.excludes" value="**/rpcserver/** **/je/examples/** **/je/junit/** **/*Test.java **/*TestBase.java **/compat/** **/je/util/**"/>
+ 
+     <property name="example.srcdir" value="${basedir}/examples"/>
+@@ -380,7 +379,7 @@
+     -->
+     <target name="compile-java6" if="jdk6.home">
+         <delete dir="${destdir}" includes="${java6.classes}"/>
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false"
++        <ant antfile="ant/compile.xml" dir="." inheritall="true"
+              target="compile-java6">
+             <reference refid="class.path" torefid="compile.classpath"/>
+         </ant>
+@@ -399,12 +398,12 @@
+ 
+     <target name="compile-src" depends="init">
+         <!-- Compile the base/standalone sources. -->
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <property name="exclude2" value="${srcfiles.non-base}"/>
+             <reference refid="class.path" torefid="compile.classpath"/>
+         </ant>
+         <!-- Compile the remainder/non-base sources. -->
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="class.path" torefid="compile.classpath"/>
+         </ant>
+         <!-- Recompile the Java 6 sources after all others.  -->
+@@ -423,7 +422,7 @@
+     </target>
+ 
+     <target name="compile-examples" depends="compile-src">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <property name="srcdir" value="${example.srcdir}"/>
+             <property name="include" value="**/*.java"/>
+             <property name="exclude2" value="jca/**/*.java"/>
+@@ -432,7 +431,7 @@
+     </target>
+ 
+     <target name="compile-jmx" depends="compile-src, init">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="j2ee.classpath" torefid="compile.classpath"/>
+             <property name="include" value="com/sleepycat/je/jmx/**/*.java"/>
+             <property name="exclude2" value=""/>
+@@ -440,7 +439,7 @@
+     </target>
+ 
+     <target name="compile-jmxexamples" depends="compile-jmx">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="j2ee.classpath" torefid="compile.classpath"/>
+             <property name="srcdir" value="${example.srcdir}"/>
+             <property name="include" value="jmx/**/*.java"/>
+@@ -449,7 +448,7 @@
+     </target>
+ 
+     <target name="compile-jca" depends="get-j2ee-jar, compile-src">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="j2ee.classpath" torefid="compile.classpath"/>
+             <property name="include" value="com/sleepycat/je/jca/**/*.java"/>
+             <property name="exclude1" value=""/>
+@@ -457,7 +456,7 @@
+     </target>
+ 
+     <target name="compile-jcaexamples" depends="compile-jca">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="j2ee.classpath" torefid="compile.classpath"/>
+             <property name="srcdir" value="${example.srcdir}"/>
+             <property name="include" value="jca/**/*.java"/>
+@@ -467,7 +466,7 @@
+ 
+     <target name="compile-jconsoleplugin"
+             depends="get-jconsole-jar, compile-src">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="jconsole.classpath" torefid="compile.classpath"/>
+             <property name="include"
+                       value="com/sleepycat/je/jmx/plugin/*.java"/>
+@@ -477,7 +476,7 @@
+     </target>
+ 
+     <target name="compile-rep-jconsoleplugin" depends="compile-jconsoleplugin">
+-        <ant antfile="ant/compile.xml" dir="." inheritall="false">
++        <ant antfile="ant/compile.xml" dir="." inheritall="true">
+             <reference refid="jconsole.classpath" torefid="compile.classpath"/>
+             <property name="include"
+                       value="com/sleepycat/je/rep/jmx/plugin/*.java"/>
+@@ -1232,7 +1231,7 @@
+             <fileset dir="${unittest.datadir}">
+                 <include name="TEST-*.xml"/>
+             </fileset>
+-            <report format="frames" todir="${unittest.reportsdir}"/>
++            <report format="noframes" todir="${unittest.reportsdir}"/>
+         </junitreport>
+     </target>
+ 
+@@ -2172,15 +2171,13 @@
+ 
+     <target name="clover.setup">
+       <antcall target="clean"/>
+-      <antcall target="compile"/>
+       <antcall target="clean-src"/>
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-setup initString="${clover.tmpdir}/jecoverage.db"/>
+-      <antcall target="compile-src"/>
+     </target>
+ 
+     <target name="clover.runtest">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-setup initString="${clover.tmpdir}/jecoverage.db"/>
+       <antcall target="test"/>
+     </target>
+@@ -2232,17 +2229,17 @@
+     </target>
+ 
+     <target name="clover.swing" depends="clover.alltestsrun">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-view/>
+     </target>
+ 
+     <target name="clover.log" depends="clover.alltestsrun">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-log/>
+     </target>
+ 
+     <target name="clover.pdf" depends="clover.alltestsrun">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-report>
+       	<current outfile="jecoverage.pdf">
+       	  <format type="pdf"/>
+@@ -2251,7 +2248,7 @@
+     </target>
+ 
+     <target name="clover.alltestsdone" depends="clover.alltestsrun">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-setup initString="${clover.tmpdir}/jecoverage.db"/>
+       <clover-report>
+         <current outfile="cloverage.xml">
+@@ -2269,7 +2266,7 @@
+ 
+     <target name="clover.singletestdone"
+             depends="clover.setup, clover.runtest">
+-      <taskdef resource="clovertasks"/>
++      <taskdef resource="cloverlib.xml" classpathref="clover.classpath"/>
+       <clover-setup initString="${clover.tmpdir}/jecoverage.db"/>
+       <clover-report>
+         <current outfile="cloverage.xml">

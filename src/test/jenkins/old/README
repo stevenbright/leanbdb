@@ -1,0 +1,11 @@
+This directory backups all the test scripts of JE tests that run on Jenkins.
+
+There are 4 serious of tests for JE:
+  Coverage Test
+  Dbsim Test
+  Unit Test
+  Standalone Test
+
+The description and usage about these 4 serious of tests are in the README file at their own directory.
+
+In addition, the file JE_test_deploy.xlsx gives the visualization of some information about all JE tests, including the test machine, the issued time and the duration time of each test.
